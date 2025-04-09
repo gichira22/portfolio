@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --scroll-behavior: smooth !important;
+  scroll-behavior: smooth !important;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background-color: var(--background);
+    --text-color: var(--foreground);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #0a0a0a;
+      --text-color: #ededed;
+    }
+  }
+
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-500 rounded-full;
+}
+
+/* Prevent text selection */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
