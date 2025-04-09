@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Search from './Search'
+import DarkModeToggle from './DarkModeToggle'
 import { useTheme } from 'next-themes'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { theme, setTheme } = useTheme()
-  const [searchQuery, setSearchQuery] = useState('')
 
   const navItems = [
     { href: '/', label: 'Home' },
@@ -18,11 +19,6 @@ export default function Navbar() {
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' }
   ]
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query)
-    // TODO: Implement search functionality with typo tolerance
-  }
 
   return (
     <nav className="fixed top-0 w-full bg-white dark:bg-gray-900 shadow-md z-50">
@@ -35,17 +31,6 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {/* Search Bar */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                className="w-64 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
-              />
-            </div>
-
             {/* Navigation Links */}
             {navItems.map((item) => (
               <Link
@@ -56,23 +41,8 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
-
-            {/* Theme Toggle */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
-            >
-              {theme === 'dark' ? '🌞' : '🌙'}
-            </button>
-
-            {/* Resume Button */}
-            <Link
-              href="/resume"
-              target="_blank"
-              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-montserrat"
-            >
-              View Resume
-            </Link>
+            <Search className="w-64" />
+            <DarkModeToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -109,14 +79,8 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/resume"
-                target="_blank"
-                className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-montserrat text-center"
-                onClick={() => setIsOpen(false)}
-              >
-                View Resume
-              </Link>
+              <Search className="w-full" />
+              <DarkModeToggle />
             </div>
           </motion.div>
         )}
