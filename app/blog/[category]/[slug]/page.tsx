@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import SocialShare from '@/components/SocialShare'
+import LikeButton from '@/components/LikeButton'
+import Comments from '@/components/Comments'
+import Newsletter from '@/components/Newsletter'
 
 const posts = {
   'software-dev': {
@@ -55,7 +58,11 @@ const posts = {
           </p>
         </article>
       `,
-      tags: ['nextjs', 'scalability', 'web-development']
+      tags: ['nextjs', 'scalability', 'web-development'],
+      id: 'building-scalable-web-applications',
+      likes: 0,
+      isLiked: false,
+      comments: []
     }
   },
   'aws': {
@@ -107,7 +114,11 @@ const posts = {
           </p>
         </article>
       `,
-      tags: ['aws', 'serverless', 'lambda']
+      tags: ['aws', 'serverless', 'lambda'],
+      id: 'serverless-aws-lambda',
+      likes: 0,
+      isLiked: false,
+      comments: []
     }
   },
   // Add other categories and posts as needed
@@ -154,7 +165,10 @@ export default function BlogPost({
             <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
             <p className="text-gray-600 dark:text-gray-400 mb-8">{post.date}</p>
           </div>
-          <SocialShare title={post.title} url={`https://yourdomain.com/blog/${category}/${slug}`} />
+          <div className="flex items-center gap-4">
+            <SocialShare title={post.title} url={`https://yourdomain.com/blog/${category}/${slug}`} />
+            <LikeButton postId={post.id} initialLikes={post.likes} initialIsLiked={post.isLiked} />
+          </div>
         </div>
         
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -172,6 +186,9 @@ export default function BlogPost({
             ))}
           </div>
         </div>
+
+        <Comments postId={post.id} initialComments={post.comments || []} />
+        <Newsletter />
       </motion.div>
     </div>
   )
