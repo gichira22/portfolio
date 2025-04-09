@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { ThemeProvider } from 'next-themes'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import GTag from './gtag'
 import "./globals.css";
 
 const inter = Inter({
@@ -24,8 +25,33 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "GK Portfolio",
-  description: "Full Stack Developer and Cybersecurity Enthusiast",
+  title: "My Portfolio",
+  description: "A modern portfolio website showcasing my projects and skills",
+  keywords: 'portfolio, developer, projects, skills, technology',
+  openGraph: {
+    title: 'My Portfolio',
+    description: 'A modern portfolio website showcasing my projects and skills',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://yourdomain.com',
+    site_name: 'My Portfolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'My Portfolio',
+    description: 'A modern portfolio website showcasing my projects and skills',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -45,6 +71,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex flex-col min-h-screen">
             <Navbar />
+            <GTag />
             <main className="flex-grow mt-16 mb-16">
               {children}
             </main>

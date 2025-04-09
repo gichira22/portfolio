@@ -6,6 +6,8 @@ import SocialShare from '@/components/SocialShare'
 import LikeButton from '@/components/LikeButton'
 import Comments from '@/components/Comments'
 import Newsletter from '@/components/Newsletter'
+import RelatedPosts from '@/components/RelatedPosts'
+import { useEffect } from 'react'
 
 const posts = {
   'software-dev': {
@@ -58,6 +60,8 @@ const posts = {
           </p>
         </article>
       `,
+      excerpt: 'Learn how to build scalable web applications using Next.js, TypeScript, and modern web development techniques.',
+      featuredImage: 'https://yourdomain.com/images/nextjs-scalability.jpg',
       tags: ['nextjs', 'scalability', 'web-development'],
       id: 'building-scalable-web-applications',
       likes: 0,
@@ -114,6 +118,8 @@ const posts = {
           </p>
         </article>
       `,
+      excerpt: 'Learn how to build serverless applications using AWS Lambda, API Gateway, and DynamoDB.',
+      featuredImage: 'https://yourdomain.com/images/aws-lambda.jpg',
       tags: ['aws', 'serverless', 'lambda'],
       id: 'serverless-aws-lambda',
       likes: 0,
@@ -124,6 +130,43 @@ const posts = {
   // Add other categories and posts as needed
 }
 
+export async function generateMetadata({
+  params: { category, slug },
+  searchParams,
+}) {
+  const post = posts[category]?.[slug]
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+      description: 'The requested blog post could not be found',
+    }
+  }
+
+  return {
+    title: `${post.title} - My Blog`,
+    description: post.excerpt || 'Read more about this topic on my blog',
+    keywords: post.tags?.join(', ') || 'blog, technology, programming',
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      images: [post.featuredImage],
+      url: `https://yourdomain.com/blog/${category}/${slug}`,
+      type: 'article',
+      article: {
+        publishedTime: post.date,
+        authors: ['Your Name'],
+        tags: post.tags,
+      },
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.featuredImage],
+    },
+  }
+}
+
 export default function BlogPost({
   params: { category, slug }
 }) {
@@ -131,6 +174,15 @@ export default function BlogPost({
   if (!post) {
     return <div>Post not found</div>
   }
+
+  useEffect(() => {
+    // Initialize Google Analytics
+    if (typeof window !== 'undefined') {
+      window.gtag('config', 'YOUR_GA_ID', {
+        page_path: `/blog/${category}/${slug}`,
+      })
+    }
+  }, [category, slug])
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -177,15 +229,18 @@ export default function BlogPost({
           <h2 className="text-xl font-bold mb-4">Tags</h2>
           <div className="flex flex-wrap gap-2">
             {post.tags?.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full text-sm"
+                href={`/blog/tags/${tag}`}
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
                 #{tag}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
+
+        <RelatedPosts currentPostId={post.id} posts={posts[category]} />
 
         <Comments postId={post.id} initialComments={post.comments || []} />
         <Newsletter />
