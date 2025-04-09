@@ -34,19 +34,19 @@ export default function EcommercePage() {
           >
             <h2>Overview</h2>
             <p>
-              A modern, full-stack e-commerce platform built with Next.js and Django. This project showcases
-              my ability to create scalable, responsive web applications with complex business logic and
+              A full-stack e-commerce platform I built using Next.js and Django. This project showcases
+              my expertise in building scalable web applications with complex business logic and
               secure payment processing.
             </p>
 
             <h2>Key Features</h2>
             <ul>
-              <li>Responsive product catalog with advanced filtering and search</li>
+              <li>Responsive product catalog with filtering and search</li>
               <li>User authentication and profile management</li>
               <li>Shopping cart and wishlist functionality</li>
-              <li>Secure payment processing with Stripe integration</li>
-              <li>Order management and tracking system</li>
-              <li>Admin dashboard for inventory and order management</li>
+              <li>Secure payment processing with Stripe</li>
+              <li>Order management system</li>
+              <li>Admin dashboard for inventory</li>
             </ul>
 
             <h2>Technical Stack</h2>
@@ -54,8 +54,8 @@ export default function EcommercePage() {
               <li>Frontend: Next.js, TypeScript, Tailwind CSS</li>
               <li>Backend: Django, Django REST Framework</li>
               <li>Database: PostgreSQL</li>
-              <li>Payment Processing: Stripe API</li>
-              <li>State Management: Redux Toolkit</li>
+              <li>Payment: Stripe API</li>
+              <li>State: Redux Toolkit</li>
               <li>Testing: Jest, React Testing Library</li>
             </ul>
 
@@ -73,7 +73,7 @@ export default function EcommercePage() {
             <h2>Results</h2>
             <ul>
               <li>99.9% uptime with robust error handling</li>
-              <li>50% faster page load times compared to previous solution</li>
+              <li>50% faster page load times</li>
               <li>30% increase in mobile conversion rate</li>
               <li>Successful processing of 1000+ concurrent users</li>
             </ul>
@@ -87,7 +87,7 @@ export default function EcommercePage() {
             className="mt-12 flex flex-wrap gap-4 justify-center"
           >
             <a
-              href="https://github.com/yourusername/ecommerce"
+              href="https://github.com/gkal/ecommerce-platform"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -95,7 +95,7 @@ export default function EcommercePage() {
               View Source Code
             </a>
             <a
-              href="https://demo-ecommerce.yourdomain.com"
+              href="https://ecommerce-platform.gkal.dev"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"

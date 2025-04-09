@@ -34,7 +34,7 @@ export default function AIChatPage() {
           >
             <h2>Overview</h2>
             <p>
-              A real-time chat application enhanced with AI capabilities for natural language processing
+              A real-time chat application I developed with AI capabilities for natural language processing
               and automated responses. This project demonstrates my expertise in both frontend and
               backend development, as well as AI integration.
             </p>
@@ -97,7 +97,7 @@ export default function AIChatPage() {
             className="mt-12 flex flex-wrap gap-4 justify-center"
           >
             <a
-              href="https://github.com/yourusername/ai-chat"
+              href="https://github.com/gkal/ai-chat-app"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -105,7 +105,7 @@ export default function AIChatPage() {
               View Source Code
             </a>
             <a
-              href="https://ai-chat-demo.yourdomain.com"
+              href="https://ai-chat.gkal.dev"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"

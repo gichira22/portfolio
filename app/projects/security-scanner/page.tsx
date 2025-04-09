@@ -34,7 +34,7 @@ export default function SecurityScannerPage() {
           >
             <h2>Overview</h2>
             <p>
-              An automated web application security scanner that identifies vulnerabilities and generates
+              An automated web application security scanner I developed to identify vulnerabilities and generate
               detailed reports. This project showcases my expertise in cybersecurity and automation.
             </p>
 
@@ -74,7 +74,7 @@ export default function SecurityScannerPage() {
             </p>
             <ul>
               <li>
-                <a href="https://tryhackme.com/p/yourusername" target="_blank" rel="noopener noreferrer">
+                <a href="https://tryhackme.com/p/gkal" target="_blank" rel="noopener noreferrer">
                   TryHackMe Profile
                 </a>
                  - Completed various rooms and challenges
@@ -110,7 +110,7 @@ export default function SecurityScannerPage() {
             className="mt-12 flex flex-wrap gap-4 justify-center"
           >
             <a
-              href="https://github.com/yourusername/security-scanner"
+              href="https://github.com/gkal/security-scanner"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -118,7 +118,7 @@ export default function SecurityScannerPage() {
               View Source Code
             </a>
             <a
-              href="https://docs.yourdomain.com/security-scanner"
+              href="https://docs.gkal.dev/security-scanner"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"

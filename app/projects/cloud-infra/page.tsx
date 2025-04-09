@@ -34,7 +34,7 @@ export default function CloudInfraPage() {
           >
             <h2>Overview</h2>
             <p>
-              A comprehensive cloud infrastructure solution built with AWS and Terraform. This project
+              A comprehensive cloud infrastructure solution I built using AWS and Terraform. This project
               demonstrates my expertise in cloud architecture, infrastructure as code, and DevOps practices.
             </p>
 
@@ -85,7 +85,7 @@ export default function CloudInfraPage() {
             className="mt-12 flex flex-wrap gap-4 justify-center"
           >
             <a
-              href="https://github.com/yourusername/cloud-infra"
+              href="https://github.com/gkal/cloud-infra"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -93,7 +93,7 @@ export default function CloudInfraPage() {
               View Infrastructure Code
             </a>
             <a
-              href="https://architecture.yourdomain.com"
+              href="https://architecture.gkal.dev"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
