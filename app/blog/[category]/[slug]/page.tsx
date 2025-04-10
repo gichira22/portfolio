@@ -7,6 +7,10 @@ import EnhancedSocialShare from '@/components/EnhancedSocialShare'
 import ReadingTime from '@/components/ReadingTime'
 import TableOfContents from '@/components/TableOfContents'
 import ContinueReading from '@/components/ContinueReading'
+import CopyLink from '@/components/CopyLink'
+import SaveForLater from '@/components/SaveForLater'
+import PrintButton from '@/components/PrintButton'
+import PrintStyles from '@/components/PrintStyles'
 import LikeButton from '@/components/LikeButton'
 import Comments from '@/components/Comments'
 import Newsletter from '@/components/Newsletter'
@@ -223,6 +227,9 @@ export default async function BlogPostPage({
       transition={{ duration: 0.5 }}
       className="container mx-auto px-4 py-16"
     >
+      {/* Print Styles */}
+      <PrintStyles />
+
       {/* Hero Section */}
       <div className="mb-12">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
@@ -240,6 +247,9 @@ export default async function BlogPostPage({
             description={post.excerpt}
             image={post.image}
           />
+          <CopyLink url={`https://your-website.com/blog/${post.category}/${post.slug}`} />
+          <SaveForLater postId={post.id} />
+          <PrintButton />
           <LikeButton postId={post.id} initialLikes={post.likes} initialIsLiked={post.isLiked} />
         </div>
       </div>
