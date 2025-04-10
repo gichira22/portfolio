@@ -2,18 +2,38 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import SocialShare from '@/components/SocialShare'
+import { Metadata } from 'next'
+import EnhancedSocialShare from '@/components/EnhancedSocialShare'
+import ReadingTime from '@/components/ReadingTime'
+import TableOfContents from '@/components/TableOfContents'
+import ContinueReading from '@/components/ContinueReading'
 import LikeButton from '@/components/LikeButton'
 import Comments from '@/components/Comments'
 import Newsletter from '@/components/Newsletter'
 import RelatedPosts from '@/components/RelatedPosts'
 import { useEffect } from 'react'
 
+interface BlogPost {
+  title: string
+  content: string
+  excerpt: string
+  category: string
+  slug: string
+  date: string
+  author: string
+  image: string
+  tags: string[]
+  readingTime: number
+  id: string
+  likes: number
+  isLiked: boolean
+  comments: any[]
+}
+
 const posts = {
   'software-dev': {
     'building-scalable-web-applications': {
       title: 'Building Scalable Web Applications with Next.js',
-      date: 'April 5, 2025',
       content: `
         <article className="prose dark:prose-invert max-w-none">
           <p>
@@ -61,8 +81,13 @@ const posts = {
         </article>
       `,
       excerpt: 'Learn how to build scalable web applications using Next.js, TypeScript, and modern web development techniques.',
-      featuredImage: 'https://yourdomain.com/images/nextjs-scalability.jpg',
+      category: 'software-dev',
+      slug: 'building-scalable-web-applications',
+      date: 'April 5, 2025',
+      author: 'Your Name',
+      image: 'https://yourdomain.com/images/nextjs-scalability.jpg',
       tags: ['nextjs', 'scalability', 'web-development'],
+      readingTime: 10,
       id: 'building-scalable-web-applications',
       likes: 0,
       isLiked: false,
@@ -72,7 +97,6 @@ const posts = {
   'aws': {
     'serverless-aws-lambda': {
       title: 'Building Serverless Applications with AWS Lambda',
-      date: 'April 5, 2025',
       content: `
         <article className="prose dark:prose-invert max-w-none">
           <p>
@@ -119,8 +143,13 @@ const posts = {
         </article>
       `,
       excerpt: 'Learn how to build serverless applications using AWS Lambda, API Gateway, and DynamoDB.',
-      featuredImage: 'https://yourdomain.com/images/aws-lambda.jpg',
+      category: 'aws',
+      slug: 'serverless-aws-lambda',
+      date: 'April 5, 2025',
+      author: 'Your Name',
+      image: 'https://yourdomain.com/images/aws-lambda.jpg',
       tags: ['aws', 'serverless', 'lambda'],
+      readingTime: 10,
       id: 'serverless-aws-lambda',
       likes: 0,
       isLiked: false,
@@ -131,10 +160,11 @@ const posts = {
 }
 
 export async function generateMetadata({
-  params: { category, slug },
-  searchParams,
-}) {
-  const post = posts[category]?.[slug]
+  params,
+}: {
+  params: { category: string; slug: string }
+}): Promise<Metadata> {
+  const post = posts[params.category]?.[params.slug]
   if (!post) {
     return {
       title: 'Post Not Found',
@@ -143,34 +173,35 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} - My Blog`,
-    description: post.excerpt || 'Read more about this topic on my blog',
-    keywords: post.tags?.join(', ') || 'blog, technology, programming',
+    title: post.title,
+    description: post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images: [post.featuredImage],
-      url: `https://yourdomain.com/blog/${category}/${slug}`,
-      type: 'article',
-      article: {
-        publishedTime: post.date,
-        authors: ['Your Name'],
-        tags: post.tags,
-      },
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.featuredImage],
+      images: [post.image],
     },
   }
 }
 
-export default function BlogPost({
-  params: { category, slug }
+export default async function BlogPostPage({
+  params,
+}: {
+  params: { category: string; slug: string }
 }) {
-  const post = posts[category]?.[slug]
+  const post = posts[params.category]?.[params.slug]
   if (!post) {
     return <div>Post not found</div>
   }
@@ -179,72 +210,80 @@ export default function BlogPost({
     // Initialize Google Analytics
     if (typeof window !== 'undefined') {
       window.gtag('config', 'YOUR_GA_ID', {
-        page_path: `/blog/${category}/${slug}`,
+        page_path: `/blog/${params.category}/${params.slug}`,
       })
     }
-  }, [category, slug])
+  }, [params.category, params.slug])
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
-      >
-        <div className="flex justify-between items-start mb-8">
-          <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto px-4 py-16"
+    >
+      {/* Hero Section */}
+      <div className="mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
+        <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-400 mb-4">
+          <span>{post.date}</span>
+          <span>•</span>
+          <span>{post.author}</span>
+          <span>•</span>
+          <ReadingTime content={post.content} />
+        </div>
+        <div className="flex items-center space-x-4">
+          <EnhancedSocialShare
+            title={post.title}
+            url={`https://your-website.com/blog/${post.category}/${post.slug}`}
+            description={post.excerpt}
+            image={post.image}
+          />
+          <LikeButton postId={post.id} initialLikes={post.likes} initialIsLiked={post.isLiked} />
+        </div>
+      </div>
+
+      {/* Table of Contents */}
+      <TableOfContents content={post.content} />
+
+      {/* Post Content */}
+      <div className="prose max-w-none">
+        <ContinueReading content={post.content} />
+      </div>
+
+      {/* Tags */}
+      <div className="mt-12">
+        <h3 className="text-lg font-semibold mb-4">Tags</h3>
+        <div className="flex flex-wrap gap-2">
+          {post.tags.map((tag) => (
             <Link
-              href="/blog"
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-2 inline-flex items-center"
+              key={tag}
+              href={`/blog/tags/${tag}`}
+              className="px-3 py-1 text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
             >
-              <svg
-                className="w-4 h-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Back to Blog
+              {tag}
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">{post.date}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <SocialShare title={post.title} url={`https://yourdomain.com/blog/${category}/${slug}`} />
-            <LikeButton postId={post.id} initialLikes={post.likes} initialIsLiked={post.isLiked} />
-          </div>
+          ))}
         </div>
-        
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      </div>
 
-        <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
-          <h2 className="text-xl font-bold mb-4">Tags</h2>
-          <div className="flex flex-wrap gap-2">
-            {post.tags?.map((tag) => (
-              <Link
-                key={tag}
-                href={`/blog/tags/${tag}`}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        </div>
+      {/* Related Posts */}
+      <div className="mt-16">
+        <h3 className="text-2xl font-bold mb-8">Related Posts</h3>
+        <RelatedPosts currentPostId={post.id} posts={posts[post.category]} />
+      </div>
 
-        <RelatedPosts currentPostId={post.id} posts={posts[category]} />
-
+      {/* Comments */}
+      <div className="mt-16">
+        <h3 className="text-2xl font-bold mb-8">Comments</h3>
         <Comments postId={post.id} initialComments={post.comments || []} />
+      </div>
+
+      {/* Newsletter */}
+      <div className="mt-16">
         <Newsletter />
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   )
 }
