@@ -15,6 +15,10 @@ import LikeButton from '@/components/LikeButton'
 import Comments from '@/components/Comments'
 import Newsletter from '@/components/Newsletter'
 import RelatedPosts from '@/components/RelatedPosts'
+import ShareToEmail from '@/components/ShareToEmail'
+import SaveAsPDF from '@/components/SaveAsPDF'
+import Translate from '@/components/Translate'
+import ShareToStories from '@/components/ShareToStories'
 import { useEffect } from 'react'
 
 interface BlogPost {
@@ -251,6 +255,10 @@ export default async function BlogPostPage({
           <SaveForLater postId={post.id} />
           <PrintButton />
           <LikeButton postId={post.id} initialLikes={post.likes} initialIsLiked={post.isLiked} />
+          <ShareToEmail title={post.title} url={`https://your-website.com/blog/${post.category}/${post.slug}`} excerpt={post.excerpt} />
+          <SaveAsPDF title={post.title} content={post.content} author={post.author} date={post.date} />
+          <Translate content={post.content} />
+          <ShareToStories title={post.title} url={`https://your-website.com/blog/${post.category}/${post.slug}`} image={post.image} />
         </div>
       </div>
 
