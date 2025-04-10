@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://yourdomain.com',
-    site_name: 'My Portfolio',
+    siteName: 'My Portfolio', // updated property name
   },
   twitter: {
     card: 'summary_large_image',

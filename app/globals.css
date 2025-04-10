@@ -10,12 +10,19 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-roboto-mono);
   --font-montserrat: 'Montserrat', sans-serif;
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
 }
 
 @layer base {
   :root {
     --background-color: var(--background);
     --text-color: var(--foreground);
+  }
+
+  .dark {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -34,6 +41,45 @@
 @layer components {
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
+  }
+}
+
+@layer utilities {
+  .prose {
+    @apply max-w-none;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply font-bold;
+  }
+
+  .prose a {
+    @apply text-primary-600 hover:text-primary-700;
+  }
+
+  .prose code {
+    @apply bg-gray-100 dark:bg-gray-800 rounded px-2 py-1;
+  }
+
+  .prose pre {
+    @apply bg-gray-100 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto;
   }
 }
 
